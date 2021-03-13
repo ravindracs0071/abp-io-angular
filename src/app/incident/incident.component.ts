@@ -1,60 +1,101 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
-// import { IncidentService, IncidentDto } from '@proxy/incidents';
+import { IncidentService, IncidentDetailService, IncidentDto, IncidentDetailDto, UpdateIncidentDto } from '@proxy/incident';
+import { ReviewDetailService, ReviewDetailDto, CreateReviewDetailDto, UpdateReviewDetailDto } from '@proxy/incident';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateAdapter } from '@abp/ng.theme.shared/extensions';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 
 @Component({
   selector: 'app-incident',
   templateUrl: './incident.component.html',
+  providers: [ListService, { provide: NgbDateAdapter, useClass: DateAdapter }],
 })
 export class IncidentComponent implements OnInit {
-  incident = { items: [], totalCount: 0 } as PagedResultDto<IncidentDto>;
-
+  incident = { items: [], totalCount: 0 } as PagedResultDto<IncidentDetailDto>;
+  selectIncidentNo: string;
   isModalOpen = false;
+  isReviewModalOpen = false;
 
   form: FormGroup;
+  formReview: FormGroup;
 
-  selectedIncident = {} as IncidentDto;
+  selectedIncident = {} as IncidentDetailDto;
+  updateIncidentDto = {} as UpdateIncidentDto;
+
+  selectedReviewDetail = {} as ReviewDetailDto;
+  updateReviewDetailDto = {} as UpdateReviewDetailDto;
 
   constructor(
     public readonly list: ListService,
     private incidentService: IncidentService,
+    private incidentDetailService: IncidentDetailService,
+    private reviewDetailService: ReviewDetailService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService
   ) {}
 
   ngOnInit(): void {
-    const incidentStreamCreator = (query) => this.incidentService.getList(query);
-
-    this.list.hookToQuery(incidentStreamCreator).subscribe((response) => {
-      this.incident = response;
-    });
+    const incidentStreamCreator = (query) => this.incidentDetailService.getList(query);
+    // tslint:disable-next-line: deprecation
+    this.list.hookToQuery(incidentStreamCreator).subscribe(
+      response => {
+        this.incident = response;
+      });
   }
 
   createIncident() {
-    this.selectedIncident = {} as IncidentDto;
-    this.buildForm();
-    this.isModalOpen = true;
+    this.selectedIncident = {} as IncidentDetailDto;
+    // tslint:disable-next-line: deprecation
+    this.incidentService.create().subscribe((incident) => {
+      this.selectedIncident.incidentMasterId = incident.id;
+      this.selectedIncident.incidentNo = incident.incidentNo;
+      this.buildForm();
+      this.isModalOpen = true;
+    });
   }
 
   editIncident(id: string) {
-    this.incidentService.get(id).subscribe((incident) => {
+    // tslint:disable-next-line: deprecation
+    this.incidentDetailService.get(id).subscribe((incident) => {
       this.selectedIncident = incident;
       this.buildForm();
       this.isModalOpen = true;
     });
   }
 
+  reviewIncident(id: string, incidentNo: string) {
+    this.selectIncidentNo = incidentNo;
+    this.selectedReviewDetail.incidentDetailId = id;
+    // tslint:disable-next-line: deprecation
+    this.reviewDetailService.getByIncidentDetailId(id).subscribe((reviewDetailDto) => {
+      if (reviewDetailDto) {
+        this.selectedReviewDetail = reviewDetailDto;
+      }
+      this.buildFormReview();
+      this.isReviewModalOpen = true;
+    });
+  }
+
   buildForm() {
     this.form = this.fb.group({
-      name: [this.selectedIncident.name || '', Validators.required],
-      birthDate: [
-        this.selectedIncident.birthDate ? new Date(this.selectedIncident.birthDate) : null,
-        Validators.required,
-      ],
+      incidentMasterId: [this.selectedIncident.incidentMasterId || '', Validators.required],
+      incidentNo: [this.selectedIncident.incidentNo || '', Validators.required],
+      incidentDescr: [this.selectedIncident.incidentDescr || '', Validators.required],
+      incidentType: [this.selectedIncident.incidentType || ''],
+      occurenceDate: [this.selectedIncident.occurenceDate ? new Date(this.selectedIncident.occurenceDate) : null],
+      reportTo: [this.selectedIncident.reportTo || ''],
+    });
+  }
+
+  buildFormReview() {
+    this.formReview = this.fb.group({
+      incidentDetailId: [this.selectedReviewDetail.incidentDetailId || '', Validators.required],
+      isIncidentValid: [this.selectedReviewDetail.isIncidentValid || true, Validators.required],
+      comments: [this.selectedReviewDetail.comments || ''],
+      incidentStatus: [this.selectedReviewDetail.incidentStatus || ''],
+      endDate: [this.selectedReviewDetail.endDate ? new Date(this.selectedReviewDetail.endDate) : null],
     });
   }
 
@@ -62,15 +103,16 @@ export class IncidentComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
     if (this.selectedIncident.id) {
-      this.incidentService.update(this.selectedIncident.id, this.form.value).subscribe(() => {
+      // tslint:disable-next-line: deprecation
+      this.incidentDetailService.update(this.selectedIncident.id, this.form.value).subscribe(() => {
         this.isModalOpen = false;
         this.form.reset();
         this.list.get();
       });
     } else {
-      this.incidentService.create(this.form.value).subscribe(() => {
+      // tslint:disable-next-line: deprecation
+      this.incidentDetailService.create(this.form.value).subscribe(() => {
         this.isModalOpen = false;
         this.form.reset();
         this.list.get();
@@ -78,11 +120,35 @@ export class IncidentComponent implements OnInit {
     }
   }
 
+  saveReview() {
+    if (this.formReview.invalid) {
+      return;
+    }
+
+    if (this.selectedReviewDetail.id) {
+      // tslint:disable-next-line: deprecation
+      this.reviewDetailService.update(this.selectedReviewDetail.id, this.formReview.value).subscribe(() => {
+        this.isReviewModalOpen = false;
+        this.formReview.reset();
+        this.list.get();
+      });
+    } else {
+      // tslint:disable-next-line: deprecation
+      this.reviewDetailService.create(this.formReview.value).subscribe(() => {
+        this.isReviewModalOpen = false;
+        this.formReview.reset();
+        this.list.get();
+      });
+    }
+  }
+
   delete(id: string) {
+    // tslint:disable-next-line: deprecation
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
-        this.incidentService.delete(id).subscribe(() => this.list.get());
+        // tslint:disable-next-line: deprecation
+        this.incidentDetailService.delete(id).subscribe(() => this.list.get());
       }
     });
-  }  
+  }
 }

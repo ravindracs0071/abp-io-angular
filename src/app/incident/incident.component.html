@@ -40,6 +40,9 @@
               <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="reviewIncident(row.id, row.incidentNo)">
+                {{ '::Review' | abpLocalization }}
+              </button>
               <button ngbDropdownItem (click)="editIncident(row.id)">
                 {{ '::Edit' | abpLocalization }}
               </button>
@@ -50,12 +53,15 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::BirthDate' | abpLocalization">
+      <ngx-datatable-column [name]="'::IncidentNo' | abpLocalization" prop="incidentNo"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::ReportTo' | abpLocalization" prop="reportTo"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::OccurenceDate' | abpLocalization">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row.birthDate | date }}
+          {{ row.occurenceDate | date }}
         </ng-template>
       </ngx-datatable-column>
+      
     </ngx-datatable>
   </div>
 </div>
@@ -68,17 +74,84 @@
   <ng-template #abpBody>
     <form id="incident-form" [formGroup]="form" (ngSubmit)="save()">
       <div class="form-group">
-        <label for="incident-name">Name</label><span> * </span>
-        <input type="text" id="incident-name" class="form-control" formControlName="name" autofocus />
+        <label for="incidentNo">Incident no.</label><span> * </span>
+        <input type="text" id="incidentNo" class="form-control" formControlName="incidentNo" readonly autofocus />
       </div>
-
       <div class="form-group">
-        <label for="incident-birth-date">Birth date</label><span> * </span>
+        <label for="incidentDescr">Incident description</label><span> * </span>
+        <input type="text" id="incidentDescr" class="form-control" formControlName="incidentDescr"/>
+      </div>
+      <div class="form-group">
+        <label for="incidentType">Incident type</label>
+        <select class="form-control" formControlName="incidentType">
+          <option [ngValue]="null">Select Type</option>
+          <option [ngValue]="1">1</option>
+          <option [ngValue]="2">2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="occurenceDate">Occurence date</label>
         <input
-          id="incident-birth-date"
+          id="occurenceDate"
           ngbDatepicker
           #datepicker="ngbDatepicker"
-          formControlName="birthDate"
+          formControlName="occurenceDate"
+          class="form-control"
+          (click)="datepicker.toggle()"
+        />
+      </div>
+      <div class="form-group">
+        <label for="reportTo">Report To</label>
+        <input type="text" id="reportTo" class="form-control" formControlName="reportTo"/>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" #abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+    <button form="incident-form" class="btn btn-primary" [disabled]="form.invalid || form.pristine">
+      <i class="fa fa-check mr-1"></i>
+      {{ '::Save' | abpLocalization }}
+    </button>
+  </ng-template>
+</abp-modal>
+
+<abp-modal [(visible)]="isReviewModalOpen">
+  <ng-template #abpHeader>
+    <h3>
+      {{ '::Incident:Review' | abpLocalization }} :: {{selectIncidentNo}}
+      <!-- {{ (selectedReviewDetail.id ? '::Edit' : '::NewIncident') | abpLocalization }} -->
+    </h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form id="review-form" [formGroup]="formReview" (ngSubmit)="saveReview()">
+      <div class="form-group">
+        <label for="comments">Is Incident Valid</label>
+        <input type="checkbox" id="isIncidentValid" class="form-control" formControlName="isIncidentValid"/>
+      </div>
+      <div class="form-group">
+        <label for="comments">Reviewer Comments</label><span> * </span>
+        <input type="text" id="comments" class="form-control" formControlName="comments"/>
+      </div>
+      <div class="form-group">
+        <label for="incidentStatus">Incident Status</label>
+        <select class="form-control" formControlName="incidentStatus">
+          <option [ngValue]="'Pending'">Pending</option>
+          <option [ngValue]="'InProgress'">InProgress</option>
+          <option [ngValue]="'Done'">Done</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="endDate">End On</label>
+        <input
+          id="endDate"
+          ngbDatepicker
+          #datepicker="ngbDatepicker"
+          formControlName="endDate"
           class="form-control"
           (click)="datepicker.toggle()"
         />
@@ -91,7 +164,7 @@
       {{ '::Cancel' | abpLocalization }}
     </button>
 
-    <button form="incident-form" class="btn btn-primary" [disabled]="form.invalid || form.pristine">
+    <button form="review-form" class="btn btn-primary" [disabled]="formReview.invalid || formReview.pristine">
       <i class="fa fa-check mr-1"></i>
       {{ '::Save' | abpLocalization }}
     </button>

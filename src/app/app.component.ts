@@ -1,5 +1,6 @@
-import { RoutesService, eLayoutType } from "@abp/ng.core";
 import { Component } from '@angular/core';
+import { RoutesService, eLayoutType } from '@abp/ng.core';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-root',
@@ -9,25 +10,26 @@ import { Component } from '@angular/core';
   `,
 })
 export class AppComponent {
-/**
- *
- */
-constructor(routes: RoutesService) {
-  routes.add([
-    {
-      path: 'incident-management',
-      name: 'Incident management',
-      order: 101,
-      iconClass: 'fas fa-cog',
-    },
-    {
-      path: '/incident-management/incidents',
-      name: 'Incidents',
-      parentName: 'Incident management',
-      order: 1,
-      layout: eLayoutType.application,
-    },
-  ]);
+get hasLoggedIn(): boolean {
+    return this.oAuthService.hasValidAccessToken();
 }
-
+constructor(routes: RoutesService, private oAuthService: OAuthService) {
+  // if (this.hasLoggedIn) {
+  //   routes.add([
+  //     {
+  //       path: 'incident-management',
+  //       name: 'Incident management',
+  //       order: 101,
+  //       iconClass: 'fas fa-cog'
+  //     },
+  //     {
+  //       path: '/incident-management/incidents',
+  //       name: 'Incidents',
+  //       parentName: 'Incident management',
+  //       order: 1,
+  //       layout: eLayoutType.application,
+  //     },
+  //   ]);
+  // }
+}
 }

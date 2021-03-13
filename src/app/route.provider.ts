@@ -13,7 +13,22 @@ function configureRoutes(routesService: RoutesService) {
         name: '::Menu:Home',
         iconClass: 'fas fa-home',
         order: 1,
+        layout: eLayoutType.application
+      },
+      {
+        path: 'incident-management',
+        name: 'Incident management',
+        order: 101,
+        iconClass: 'fas fa-cog',
+        requiredPolicy: 'Demo.Incidents',
+      },
+      {
+        path: '/incident-management/incidents',
+        name: 'Incidents',
+        parentName: 'Incident management',
+        order: 1,
         layout: eLayoutType.application,
+        requiredPolicy: 'Demo.Incidents',
       },
     ]);
   };
