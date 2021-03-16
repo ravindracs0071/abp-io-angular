@@ -17,14 +17,14 @@ function configureRoutes(routesService: RoutesService) {
       },
       {
         path: 'incident-management',
-        name: 'Incident management',
+        name: '::Menu:Incident',
         order: 101,
         iconClass: 'fas fa-cog',
         requiredPolicy: 'Demo.Incidents',
       },
       {
         path: '/incident-management/incidents',
-        name: 'Incidents',
+        name: '::SubMenu:Incident',
         parentName: 'Incident management',
         order: 1,
         layout: eLayoutType.application,

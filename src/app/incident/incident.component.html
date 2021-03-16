@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col col-md-6">
         <h5 class="card-title">
-          {{ '::Menu:Incidents' | abpLocalization }}
+          {{ '::Menu:Incident' | abpLocalization }}
         </h5>
       </div>
       <div class="text-right col col-md-6">
@@ -74,15 +74,15 @@
   <ng-template #abpBody>
     <form id="incident-form" [formGroup]="form" (ngSubmit)="save()">
       <div class="form-group">
-        <label for="incidentNo">Incident no.</label><span> * </span>
+        <label for="incidentNo">{{ '::IncidentNo' | abpLocalization }}</label><span> * </span>
         <input type="text" id="incidentNo" class="form-control" formControlName="incidentNo" readonly autofocus />
       </div>
       <div class="form-group">
-        <label for="incidentDescr">Incident description</label><span> * </span>
+        <label for="incidentDescr">{{ '::IncidentDescr' | abpLocalization }}</label><span> * </span>
         <input type="text" id="incidentDescr" class="form-control" formControlName="incidentDescr"/>
       </div>
       <div class="form-group">
-        <label for="incidentType">Incident type</label>
+        <label for="incidentType">{{ '::IncidentType' | abpLocalization }}</label>
         <select class="form-control" formControlName="incidentType">
           <option [ngValue]="null">Select Type</option>
           <option [ngValue]="1">1</option>
@@ -90,7 +90,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="occurenceDate">Occurence date</label>
+        <label for="occurenceDate">{{ '::OccurenceDate' | abpLocalization }}</label>
         <input
           id="occurenceDate"
           ngbDatepicker
@@ -101,7 +101,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="reportTo">Report To</label>
+        <label for="reportTo">{{ '::ReportTo' | abpLocalization }}</label>
         <input type="text" id="reportTo" class="form-control" formControlName="reportTo"/>
       </div>
     </form>
@@ -130,15 +130,15 @@
   <ng-template #abpBody>
     <form id="review-form" [formGroup]="formReview" (ngSubmit)="saveReview()">
       <div class="form-group">
-        <label for="comments">Is Incident Valid</label>
+        <label for="comments">{{ '::IncidentValidity' | abpLocalization }}</label>
         <input type="checkbox" id="isIncidentValid" class="form-control" formControlName="isIncidentValid"/>
       </div>
       <div class="form-group">
-        <label for="comments">Reviewer Comments</label><span> * </span>
+        <label for="comments">{{ '::ReviewerComments' | abpLocalization }}</label><span> * </span>
         <input type="text" id="comments" class="form-control" formControlName="comments"/>
       </div>
       <div class="form-group">
-        <label for="incidentStatus">Incident Status</label>
+        <label for="incidentStatus">{{ '::Status' | abpLocalization }}</label>
         <select class="form-control" formControlName="incidentStatus">
           <option [ngValue]="'Pending'">Pending</option>
           <option [ngValue]="'InProgress'">InProgress</option>
@@ -146,7 +146,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="endDate">End On</label>
+        <label for="endDate">{{ '::IncidentEndOn' | abpLocalization }}</label>
         <input
           id="endDate"
           ngbDatepicker
