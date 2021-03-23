@@ -7,6 +7,36 @@
       "rootPath": "app",
       "remoteServiceName": "Default",
       "controllers": {
+        "Sample.Demo.PropertySetting.EntitySettingsAppService": {
+          "controllerName": "EntitySettings",
+          "type": "Sample.Demo.PropertySetting.EntitySettingsAppService",
+          "interfaces": [
+            {
+              "type": "Volo.Abp.Validation.IValidationEnabled"
+            },
+            {
+              "type": "Volo.Abp.Auditing.IAuditingEnabled"
+            },
+            {
+              "type": "Sample.Demo.PropertySetting.IEntitySettingsAppService"
+            }
+          ],
+          "actions": {
+            "GetAsync": {
+              "uniqueName": "GetAsync",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/entity-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Collections.Generic.Dictionary<System.String,Sample.Demo.PropertySetting.PropertySettingValue>",
+                "typeSimple": "{string:Sample.Demo.PropertySetting.PropertySettingValue}"
+              }
+            }
+          }
+        },
         "Sample.Demo.Localization.LanguageTextAppService": {
           "controllerName": "LanguageText",
           "type": "Sample.Demo.Localization.LanguageTextAppService",
@@ -896,132 +926,163 @@
         }
       }
     },
-    "featureManagement": {
-      "rootPath": "featureManagement",
-      "remoteServiceName": "AbpFeatureManagement",
+    "account": {
+      "rootPath": "account",
+      "remoteServiceName": "AbpAccount",
       "controllers": {
-        "Volo.Abp.FeatureManagement.FeaturesController": {
-          "controllerName": "Features",
-          "type": "Volo.Abp.FeatureManagement.FeaturesController",
-          "interfaces": [
-            {
-              "type": "Volo.Abp.FeatureManagement.IFeatureAppService"
-            }
-          ],
+        "Volo.Abp.Account.Web.Areas.Account.Controllers.AccountController": {
+          "controllerName": "Account",
+          "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.AccountController",
+          "interfaces": [],
           "actions": {
-            "GetAsyncByProviderNameAndProviderKey": {
-              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
-              "name": "GetAsync",
-              "httpMethod": "GET",
-              "url": "api/feature-management/features",
+            "LoginByLogin": {
+              "uniqueName": "LoginByLogin",
+              "name": "Login",
+              "httpMethod": "POST",
+              "url": "api/account/login",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "name": "login",
+                  "typeAsString": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo, Volo.Abp.Account.Web",
+                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
+                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "nameOnMethod": "login",
+                  "name": "login",
+                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
+                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
+                  "bindingSourceId": "Body",
                   "descriptorName": ""
                 }
               ],
               "returnValue": {
-                "type": "Volo.Abp.FeatureManagement.GetFeatureListResultDto",
-                "typeSimple": "Volo.Abp.FeatureManagement.GetFeatureListResultDto"
+                "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult",
+                "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult"
               }
             },
-            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
-              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
-              "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/feature-management/features",
+            "Logout": {
+              "uniqueName": "Logout",
+              "name": "Logout",
+              "httpMethod": "GET",
+              "url": "api/account/logout",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              }
+            },
+            "CheckPasswordByLogin": {
+              "uniqueName": "CheckPasswordByLogin",
+              "name": "CheckPassword",
+              "httpMethod": "POST",
+              "url": "api/account/check-password",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "input",
-                  "typeAsString": "Volo.Abp.FeatureManagement.UpdateFeaturesDto, Volo.Abp.FeatureManagement.Application.Contracts",
-                  "type": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
-                  "typeSimple": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "name": "login",
+                  "typeAsString": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo, Volo.Abp.Account.Web",
+                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
+                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "nameOnMethod": "login",
+                  "name": "login",
+                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
+                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
+                  "bindingSourceId": "Body",
                   "descriptorName": ""
-                },
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult",
+                "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult"
+              }
+            }
+          }
+        },
+        "Volo.Abp.Account.AccountController": {
+          "controllerName": "Account",
+          "type": "Volo.Abp.Account.AccountController",
+          "interfaces": [
+            {
+              "type": "Volo.Abp.Account.IAccountAppService"
+            }
+          ],
+          "actions": {
+            "RegisterAsyncByInput": {
+              "uniqueName": "RegisterAsyncByInput",
+              "name": "RegisterAsync",
+              "httpMethod": "POST",
+              "url": "api/account/register",
+              "supportedVersions": [],
+              "parametersOnMethod": [
                 {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "name": "input",
+                  "typeAsString": "Volo.Abp.Account.RegisterDto, Volo.Abp.Account.Application.Contracts",
+                  "type": "Volo.Abp.Account.RegisterDto",
+                  "typeSimple": "Volo.Abp.Account.RegisterDto",
                   "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
                 {
                   "nameOnMethod": "input",
                   "name": "input",
-                  "type": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
-                  "typeSimple": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "type": "Volo.Abp.Account.RegisterDto",
+                  "typeSimple": "Volo.Abp.Account.RegisterDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Identity.IdentityUserDto",
+                "typeSimple": "Volo.Abp.Identity.IdentityUserDto"
+              }
+            },
+            "SendPasswordResetCodeAsyncByInput": {
+              "uniqueName": "SendPasswordResetCodeAsyncByInput",
+              "name": "SendPasswordResetCodeAsync",
+              "httpMethod": "POST",
+              "url": "api/account/send-password-reset-code",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Volo.Abp.Account.SendPasswordResetCodeDto, Volo.Abp.Account.Application.Contracts",
+                  "type": "Volo.Abp.Account.SendPasswordResetCodeDto",
+                  "typeSimple": "Volo.Abp.Account.SendPasswordResetCodeDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "type": "Volo.Abp.Account.SendPasswordResetCodeDto",
+                  "typeSimple": "Volo.Abp.Account.SendPasswordResetCodeDto",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -1033,137 +1094,29 @@
                 "type": "System.Void",
                 "typeSimple": "System.Void"
               }
-            }
-          }
-        }
-      }
-    },
-    "permissionManagement": {
-      "rootPath": "permissionManagement",
-      "remoteServiceName": "AbpPermissionManagement",
-      "controllers": {
-        "Volo.Abp.PermissionManagement.PermissionsController": {
-          "controllerName": "Permissions",
-          "type": "Volo.Abp.PermissionManagement.PermissionsController",
-          "interfaces": [
-            {
-              "type": "Volo.Abp.PermissionManagement.IPermissionAppService"
-            }
-          ],
-          "actions": {
-            "GetAsyncByProviderNameAndProviderKey": {
-              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
-              "name": "GetAsync",
-              "httpMethod": "GET",
-              "url": "api/permission-management/permissions",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
-                "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
-              }
             },
-            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
-              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
-              "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/permission-management/permissions",
+            "ResetPasswordAsyncByInput": {
+              "uniqueName": "ResetPasswordAsyncByInput",
+              "name": "ResetPasswordAsync",
+              "httpMethod": "POST",
+              "url": "api/account/reset-password",
               "supportedVersions": [],
               "parametersOnMethod": [
-                {
-                  "name": "providerName",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "providerKey",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
                 {
                   "name": "input",
-                  "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
-                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
-                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeAsString": "Volo.Abp.Account.ResetPasswordDto, Volo.Abp.Account.Application.Contracts",
+                  "type": "Volo.Abp.Account.ResetPasswordDto",
+                  "typeSimple": "Volo.Abp.Account.ResetPasswordDto",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "providerName",
-                  "name": "providerName",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "providerKey",
-                  "name": "providerKey",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
                 {
                   "nameOnMethod": "input",
                   "name": "input",
-                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
-                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "type": "Volo.Abp.Account.ResetPasswordDto",
+                  "typeSimple": "Volo.Abp.Account.ResetPasswordDto",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -2255,6 +2208,148 @@
         }
       }
     },
+    "featureManagement": {
+      "rootPath": "featureManagement",
+      "remoteServiceName": "AbpFeatureManagement",
+      "controllers": {
+        "Volo.Abp.FeatureManagement.FeaturesController": {
+          "controllerName": "Features",
+          "type": "Volo.Abp.FeatureManagement.FeaturesController",
+          "interfaces": [
+            {
+              "type": "Volo.Abp.FeatureManagement.IFeatureAppService"
+            }
+          ],
+          "actions": {
+            "GetAsyncByProviderNameAndProviderKey": {
+              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/feature-management/features",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.FeatureManagement.GetFeatureListResultDto",
+                "typeSimple": "Volo.Abp.FeatureManagement.GetFeatureListResultDto"
+              }
+            },
+            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
+              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/feature-management/features",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Volo.Abp.FeatureManagement.UpdateFeaturesDto, Volo.Abp.FeatureManagement.Application.Contracts",
+                  "type": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "typeSimple": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "type": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "typeSimple": "Volo.Abp.FeatureManagement.UpdateFeaturesDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              }
+            }
+          }
+        }
+      }
+    },
     "multi-tenancy": {
       "rootPath": "multi-tenancy",
       "remoteServiceName": "AbpTenantManagement",
@@ -2615,197 +2710,132 @@
         }
       }
     },
-    "account": {
-      "rootPath": "account",
-      "remoteServiceName": "AbpAccount",
+    "permissionManagement": {
+      "rootPath": "permissionManagement",
+      "remoteServiceName": "AbpPermissionManagement",
       "controllers": {
-        "Volo.Abp.Account.Web.Areas.Account.Controllers.AccountController": {
-          "controllerName": "Account",
-          "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.AccountController",
-          "interfaces": [],
-          "actions": {
-            "LoginByLogin": {
-              "uniqueName": "LoginByLogin",
-              "name": "Login",
-              "httpMethod": "POST",
-              "url": "api/account/login",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "login",
-                  "typeAsString": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo, Volo.Abp.Account.Web",
-                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "login",
-                  "name": "login",
-                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult",
-                "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult"
-              }
-            },
-            "Logout": {
-              "uniqueName": "Logout",
-              "name": "Logout",
-              "httpMethod": "GET",
-              "url": "api/account/logout",
-              "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              }
-            },
-            "CheckPasswordByLogin": {
-              "uniqueName": "CheckPasswordByLogin",
-              "name": "CheckPassword",
-              "httpMethod": "POST",
-              "url": "api/account/check-password",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "login",
-                  "typeAsString": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo, Volo.Abp.Account.Web",
-                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "login",
-                  "name": "login",
-                  "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult",
-                "typeSimple": "Volo.Abp.Account.Web.Areas.Account.Controllers.Models.AbpLoginResult"
-              }
-            }
-          }
-        },
-        "Volo.Abp.Account.AccountController": {
-          "controllerName": "Account",
-          "type": "Volo.Abp.Account.AccountController",
+        "Volo.Abp.PermissionManagement.PermissionsController": {
+          "controllerName": "Permissions",
+          "type": "Volo.Abp.PermissionManagement.PermissionsController",
           "interfaces": [
             {
-              "type": "Volo.Abp.Account.IAccountAppService"
+              "type": "Volo.Abp.PermissionManagement.IPermissionAppService"
             }
           ],
           "actions": {
-            "RegisterAsyncByInput": {
-              "uniqueName": "RegisterAsyncByInput",
-              "name": "RegisterAsync",
-              "httpMethod": "POST",
-              "url": "api/account/register",
+            "GetAsyncByProviderNameAndProviderKey": {
+              "uniqueName": "GetAsyncByProviderNameAndProviderKey",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/permission-management/permissions",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "input",
-                  "typeAsString": "Volo.Abp.Account.RegisterDto, Volo.Abp.Account.Application.Contracts",
-                  "type": "Volo.Abp.Account.RegisterDto",
-                  "typeSimple": "Volo.Abp.Account.RegisterDto",
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "type": "Volo.Abp.Account.RegisterDto",
-                  "typeSimple": "Volo.Abp.Account.RegisterDto",
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "type": "System.String",
+                  "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
-                  "bindingSourceId": "Body",
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
                   "descriptorName": ""
                 }
               ],
               "returnValue": {
-                "type": "Volo.Abp.Identity.IdentityUserDto",
-                "typeSimple": "Volo.Abp.Identity.IdentityUserDto"
+                "type": "Volo.Abp.PermissionManagement.GetPermissionListResultDto",
+                "typeSimple": "Volo.Abp.PermissionManagement.GetPermissionListResultDto"
               }
             },
-            "SendPasswordResetCodeAsyncByInput": {
-              "uniqueName": "SendPasswordResetCodeAsyncByInput",
-              "name": "SendPasswordResetCodeAsync",
-              "httpMethod": "POST",
-              "url": "api/account/send-password-reset-code",
+            "UpdateAsyncByProviderNameAndProviderKeyAndInput": {
+              "uniqueName": "UpdateAsyncByProviderNameAndProviderKeyAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/permission-management/permissions",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
+                  "name": "providerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "providerKey",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
                   "name": "input",
-                  "typeAsString": "Volo.Abp.Account.SendPasswordResetCodeDto, Volo.Abp.Account.Application.Contracts",
-                  "type": "Volo.Abp.Account.SendPasswordResetCodeDto",
-                  "typeSimple": "Volo.Abp.Account.SendPasswordResetCodeDto",
+                  "typeAsString": "Volo.Abp.PermissionManagement.UpdatePermissionsDto, Volo.Abp.PermissionManagement.Application.Contracts",
+                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "type": "Volo.Abp.Account.SendPasswordResetCodeDto",
-                  "typeSimple": "Volo.Abp.Account.SendPasswordResetCodeDto",
+                  "nameOnMethod": "providerName",
+                  "name": "providerName",
+                  "type": "System.String",
+                  "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
-                  "bindingSourceId": "Body",
+                  "bindingSourceId": "ModelBinding",
                   "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              }
-            },
-            "ResetPasswordAsyncByInput": {
-              "uniqueName": "ResetPasswordAsyncByInput",
-              "name": "ResetPasswordAsync",
-              "httpMethod": "POST",
-              "url": "api/account/reset-password",
-              "supportedVersions": [],
-              "parametersOnMethod": [
+                },
                 {
-                  "name": "input",
-                  "typeAsString": "Volo.Abp.Account.ResetPasswordDto, Volo.Abp.Account.Application.Contracts",
-                  "type": "Volo.Abp.Account.ResetPasswordDto",
-                  "typeSimple": "Volo.Abp.Account.ResetPasswordDto",
+                  "nameOnMethod": "providerKey",
+                  "name": "providerKey",
+                  "type": "System.String",
+                  "typeSimple": "string",
                   "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
                 {
                   "nameOnMethod": "input",
                   "name": "input",
-                  "type": "Volo.Abp.Account.ResetPasswordDto",
-                  "typeSimple": "Volo.Abp.Account.ResetPasswordDto",
+                  "type": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
+                  "typeSimple": "Volo.Abp.PermissionManagement.UpdatePermissionsDto",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -5440,6 +5470,33 @@
           "name": "IsRequired",
           "type": "System.Boolean",
           "typeSimple": "boolean",
+          "isRequired": false
+        }
+      ]
+    },
+    "Sample.Demo.PropertySetting.PropertySettingValue": {
+      "baseType": "Volo.Abp.NameValue",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Visible",
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false
+        },
+        {
+          "name": "RequiredRegEx",
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false
+        },
+        {
+          "name": "RegExRule",
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false
         }
       ]

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { IncidentService, IncidentDetailService, IncidentDto, IncidentDetailDto, UpdateIncidentDto } from '@proxy/incident';
 import { ReviewDetailService, ReviewDetailDto, CreateReviewDetailDto, UpdateReviewDetailDto } from '@proxy/incident';
+import {PropertySettingValue, EntitySettingsService } from '@proxy/property-setting';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateAdapter } from '@abp/ng.theme.shared/extensions';
@@ -13,6 +14,7 @@ import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
   providers: [ListService, { provide: NgbDateAdapter, useClass: DateAdapter }],
 })
 export class IncidentComponent implements OnInit {
+  propertySetting = {} as Record<string, PropertySettingValue>;
   incident = { items: [], totalCount: 0 } as PagedResultDto<IncidentDetailDto>;
   selectIncidentNo: string;
   isModalOpen = false;
@@ -29,6 +31,7 @@ export class IncidentComponent implements OnInit {
 
   constructor(
     public readonly list: ListService,
+    private entitySetting: EntitySettingsService,
     private incidentService: IncidentService,
     private incidentDetailService: IncidentDetailService,
     private reviewDetailService: ReviewDetailService,
@@ -37,6 +40,8 @@ export class IncidentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
+    this.entitySetting.get().subscribe((response) => { debugger; this.propertySetting =  response; });
     const incidentStreamCreator = (query) => this.incidentDetailService.getList(query);
     // tslint:disable-next-line: deprecation
     this.list.hookToQuery(incidentStreamCreator).subscribe(

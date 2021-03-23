@@ -25,7 +25,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/incident-management/incidents',
         name: '::SubMenu:Incident',
-        parentName: 'Incident management',
+        parentName: '::Menu:Incident',
         order: 1,
         layout: eLayoutType.application,
         requiredPolicy: 'Demo.Incidents',

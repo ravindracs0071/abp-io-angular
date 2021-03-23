@@ -1,3 +1,4 @@
 import * as Incident from './incident';
 import * as Localization from './localization';
-export { Incident, Localization };
+import * as PropertySetting from './property-setting';
+export { Incident, Localization, PropertySetting };
