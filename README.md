@@ -1,3 +1,14 @@
+# Screenshots
+
+####
+![](screenshot/Incident_01.png)
+
+#### 
+![](screenshot/Incident_02.png)
+
+#### 
+![](screenshot/Incident_03.png)
+
 # Demo
 
 This is a startup project based on the ABP framework. For more information, visit <a href="https://abp.io/" target="_blank">abp.io</a>
