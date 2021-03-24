@@ -40,14 +40,16 @@ export class IncidentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // tslint:disable-next-line: deprecation
-    this.entitySetting.get().subscribe((response) => { debugger; this.propertySetting =  response; });
     const incidentStreamCreator = (query) => this.incidentDetailService.getList(query);
     // tslint:disable-next-line: deprecation
-    this.list.hookToQuery(incidentStreamCreator).subscribe(
-      response => {
-        this.incident = response;
-      });
+    this.entitySetting.get().subscribe((responseA) => { 
+        this.propertySetting =  responseA; 
+        // tslint:disable-next-line: deprecation
+        this.list.hookToQuery(incidentStreamCreator).subscribe(
+          response => {
+            this.incident = response;
+          });
+    });
   }
 
   createIncident() {
@@ -108,6 +110,11 @@ export class IncidentComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    if (this.form.value.incidentType === '' || this.form.value.incidentType === null) {
+      this.form.value.incidentType = '0';
+    }
+
     if (this.selectedIncident.id) {
       // tslint:disable-next-line: deprecation
       this.incidentDetailService.update(this.selectedIncident.id, this.form.value).subscribe(() => {

@@ -53,10 +53,10 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::IncidentNo' | abpLocalization" prop="incidentNo"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::ReportTo' | abpLocalization" prop="reportTo"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::OccurenceDate' | abpLocalization">
+      <ngx-datatable-column [hidden]="!propertySetting['Demo.Incidents.IncidentNo'].visible" [name]="'::IncidentNo' | abpLocalization" prop="incidentNo"></ngx-datatable-column>
+      <ngx-datatable-column [hidden]="!propertySetting['Demo.Incidents.Status'].visible" [name]="'::Status' | abpLocalization" prop="status"></ngx-datatable-column>
+      <ngx-datatable-column [hidden]="!propertySetting['Demo.Incidents.ReportTo'].visible" [name]="'::ReportTo' | abpLocalization" prop="reportTo"></ngx-datatable-column>
+      <ngx-datatable-column [hidden]="!propertySetting['Demo.Incidents.OccurenceDate'].visible" [name]="'::OccurenceDate' | abpLocalization">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.occurenceDate | date }}
         </ng-template>
@@ -73,15 +73,15 @@
 
   <ng-template #abpBody>
     <form id="incident-form" [formGroup]="form" (ngSubmit)="save()">
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.IncidentNo'].visible">
         <label for="incidentNo">{{ '::IncidentNo' | abpLocalization }}</label><span> * </span>
         <input type="text" id="incidentNo" class="form-control" formControlName="incidentNo" readonly autofocus />
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.IncidentDescr'].visible">
         <label for="incidentDescr">{{ '::IncidentDescr' | abpLocalization }}</label><span> * </span>
         <input type="text" id="incidentDescr" class="form-control" formControlName="incidentDescr"/>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.IncidentType'].visible">
         <label for="incidentType">{{ '::IncidentType' | abpLocalization }}</label>
         <select class="form-control" formControlName="incidentType">
           <option [ngValue]="null">Select Type</option>
@@ -89,7 +89,7 @@
           <option [ngValue]="2">2</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.OccurenceDate'].visible">
         <label for="occurenceDate">{{ '::OccurenceDate' | abpLocalization }}</label>
         <input
           id="occurenceDate"
@@ -100,7 +100,7 @@
           (click)="datepicker.toggle()"
         />
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.ReportTo'].visible">
         <label for="reportTo">{{ '::ReportTo' | abpLocalization }}</label>
         <input type="text" id="reportTo" class="form-control" formControlName="reportTo"/>
       </div>
@@ -129,15 +129,15 @@
 
   <ng-template #abpBody>
     <form id="review-form" [formGroup]="formReview" (ngSubmit)="saveReview()">
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.Reviews.IsIncidentValid'].visible">
         <label for="comments">{{ '::IncidentValidity' | abpLocalization }}</label>
         <input type="checkbox" id="isIncidentValid" class="form-control" formControlName="isIncidentValid"/>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.Reviews.Comments'].visible">
         <label for="comments">{{ '::ReviewerComments' | abpLocalization }}</label><span> * </span>
         <input type="text" id="comments" class="form-control" formControlName="comments"/>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.Reviews.IncidentStatus'].visible">
         <label for="incidentStatus">{{ '::Status' | abpLocalization }}</label>
         <select class="form-control" formControlName="incidentStatus">
           <option [ngValue]="'Pending'">Pending</option>
@@ -145,7 +145,7 @@
           <option [ngValue]="'Done'">Done</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="propertySetting['Demo.Incidents.Reviews.EndDate'].visible">
         <label for="endDate">{{ '::IncidentEndOn' | abpLocalization }}</label>
         <input
           id="endDate"
